@@ -1,0 +1,15 @@
+{
+  "name": "react-address-book",
+  "version": "0.0.0",
+  "private": true,
+  "description": "React.js Address Book",
+  "dependencies": {
+    "animate.css": "~3.4.0",
+    "bootstrap": "~3.3.5",
+    "font-awesome": "~4.3.0",
+    "jquery": "~2.1.4",
+    "jquery-validation": "~1.14.0",
+    "react": "~0.13.3",
+    "react-cookie": "~0.3.4"
+  }
+}

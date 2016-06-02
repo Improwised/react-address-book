@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>React Address Book</title>
+
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css">
+
+    <!-- font owsome -->
+    <link rel="stylesheet" type="text/css" href="bower_components/font-awesome/css/font-awesome.min.css">
+
+    <!-- google open sans condensed fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+
+    <link href='http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
+    <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,700,800,900' rel='stylesheet' type='text/css'>
+
+    <!-- index css -->
+    <link rel="stylesheet" type="text/css" href="index.css">
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <!-- ============================================ -->
+    <!-- navigation -->
+    <!-- ============================================ -->
+    <nav class="navbar navbar-default">
+      <div class="container">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="#">React Address Book</a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li id="Address-List">
+              <a href="#/"><i class="fa fa-list-ol"></i>&nbsp;&nbsp;Address List</a></li>
+            <li id="Add-Address">
+              <a href="#/add-address"><i class="fa fa-file-text"></i>&nbsp;&nbsp;Add Address</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <li><a id="time_span"></a></li>
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <!-- ============================================ -->
+    <!-- // navigation -->
+    <!-- ============================================ -->
+    
+    <div id="main"></div>
+
+    <!-- jqury -->
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <!-- jquery validation -->
+    <script src="bower_components/jquery-validation/dist/jquery.validate.js"></script>
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <!-- react js -->
+    <script src="bower_components/react/react.js"></script>
+    <!-- jsx transformer -->
+    <script src="bower_components/react/JSXTransformer.js"></script>
+    <!-- React Router -->
+    <script src="node_modules/react-router/umd/ReactRouter.js"></script>
+    <!-- React cookie -->
+    <script src="bower_components/react-cookie/dist/react-cookie.js"></script>
+
+    <!-- joi validation stratergy -->
+    <script src="node_modules/joi-validation-strategy/lib/joiValidationStrategy.js"></script>
+
+
+    <!-- joi validation stratergy -->
+    <script src="node_modules/react-validation-mixin/lib/validationFactory.js"></script>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script type="text/jsx" src="components/index.jsx"></script>
+    <!-- address list json -->
+    <script type="text/javascript" src="address.js"></script>
+    <!--  -->
+    <script type="text/javascript">
+      // ========================================================================
+      // timing function
+      // ========================================================================
+      function updateTime(){
+        var currentTime = new Date();
+        var hours = currentTime.getHours();
+        var minutes = currentTime.getMinutes();
+        var seconds = currentTime.getSeconds();
+        if (minutes < 10){
+            minutes = "0" + minutes
+        }
+        if (seconds < 10){
+            seconds = "0" + seconds
+        }
+        var t_str = hours + ":" + minutes + ":" + seconds + " ";
+        if(hours > 11){
+            hours = hours - 12;
+            var t_str = hours + ":" + minutes + ":" + seconds + " ";
+            t_str += "PM";
+        } else {
+            t_str += "AM";
+        }
+        document.getElementById('time_span').innerHTML = t_str;
+      }
+      setInterval(updateTime);
+      // ========================================================================
+      // // timing function
+      // ========================================================================
+
+
+      // ========================================================================
+      // active link function
+      // ========================================================================
+      function activelink() {
+        var url = window.location.href.replace('http://localhost:8080/#/','');
+
+        if(url == 'add-address'){
+          $("#Add-Address").addClass('active');
+          $("#Address-List").removeClass('active');
+        }
+        else{
+          $("#Add-Address").removeClass('active');
+          $("#Address-List").addClass('active');
+        }
+      }
+      activelink();
+      // ========================================================================
+      // // active link function
+      // ========================================================================   
+
+
+
+      // ========================================================================
+      // watch timeing function
+      // ========================================================================   
+      $(window).on('hashchange', function() {
+        activelink();
+      });
+      // ========================================================================
+      // // watch timeing function
+      // ========================================================================
+
+
+
+      
+
+
+    </script>
+
+
+
+
+
+    <!--  -->
+    <script type="text/jsx">      
+      var MyRoutes = (
+        <ReactRouter.Route>
+          <ReactRouter.Route name="addresslist" path="/" handler={Index}></ReactRouter.Route>
+          <ReactRouter.Route name="addaddress" path="/add-address" handler={AddAddressParent}></ReactRouter.Route>
+        </ReactRouter.Route>
+      );
+      ReactRouter.run(MyRoutes, function(Root, state) {
+          React.render(
+              <Root />,
+              document.getElementById('main')
+          )
+      });
+    </script>
+
+
+  </body>
+</html>
