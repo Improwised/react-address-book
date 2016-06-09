@@ -11,6 +11,11 @@
 .navbar {
   border-radius: 0px;
 }
+
+.no-record-found {
+  color: #bbbbbb;
+}
+
 .navbar-default {
   background-color: #659CEF;
   border-color: #5a8ddc;

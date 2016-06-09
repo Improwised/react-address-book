@@ -1,4 +1,4 @@
-var addressbok = [
+var addressbook = [
     {
       "id": 1,
       "name": {'firstname':'Glover','lastname':'Baldwin' },
