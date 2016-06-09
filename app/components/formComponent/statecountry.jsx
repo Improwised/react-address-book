@@ -7,7 +7,6 @@ const propTypes = {
 };
 
 function StateCountry(props) {
-  console.log(props.countryOption);
   return (
     <div className="clearfix">
       <div className="col-lg-2 col-lg-offset-1">
