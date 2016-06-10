@@ -1,4 +1,4 @@
-var addressbook = [
+module.exports = [
     {
       "id": 1,
       "name": {'firstname':'Glover','lastname':'Baldwin' },

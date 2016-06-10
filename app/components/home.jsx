@@ -1,9 +1,11 @@
 import React, { PropTypes, Component } from 'react';
 import { Link } from 'react-router';
 import { Router } from 'react-router';
+import { Modal, Button } from 'react-bootstrap';
+import $ from 'jquery';
 import reactCookie from 'react-cookie';
+import Addresses from '../../assets/js/address.js';
 import AddressList from './tableComponent/addresslist';
-
 
 const propTypes = {};
 
@@ -13,17 +15,41 @@ class Home extends Component {
   constructor() {
     super();
     this.state = {
-      addresses: ''
+      addresses: [],
+      showModal: false,
+      id: '',
+      name: '',
     };
     this.deleteAddress = this.deleteAddress.bind(this);
     this.doSearch = this.doSearch.bind(this);
+    this.open = this.open.bind(this);
+    this.close = this.close.bind(this);
   }
 
   // Delete Address
-  deleteAddress (number) {
+  deleteAddress () {
+    var number = this.state.id;
     this.state.addresses.splice(number, 1);
     reactCookie.save('data', this.state.addresses);
-    this.setState({addresses: this.state.addresses});
+    $('#removeMsg').addClass('show');
+    $('#removeMsg').removeClass('hide');
+    this.setState({addresses: this.state.addresses, showModal: false});
+    setTimeout(function() {
+      $('#removeMsg').addClass('hide');
+      $('#removeMsg').removeClass('show');
+    }, 2000);
+  }
+
+  close () {
+    this.setState({ showModal: false });
+  }
+
+  open (event) {
+    var number = event.target.id;
+    // Get Cokkie Data
+    var data = reactCookie.load('data');
+    var name = data[number].name.firstname+ ' ' + data[number].name.lastname;
+    this.setState({ showModal: true, id: number, name: name });
   }
 
   // Search Method
@@ -62,8 +88,8 @@ class Home extends Component {
   componentWillMount () {
     var addressList = reactCookie.load('data');
     if( addressList == undefined || addressList.length == 0){
-      addressList = addressbook;
-      reactCookie.save('data',addressbook);
+      addressList = Addresses;
+      reactCookie.save('data',Addresses);
     }
     this.setState({addresses: addressList});
   }
@@ -80,7 +106,7 @@ class Home extends Component {
             <Link to={`/edit-address/${number}`}>
               <span className="glyphicon glyphicon-pencil icon icon-edit"></span>
             </Link>&nbsp;
-            <span className="glyphicon glyphicon-remove icon icon-delete" onClick={this.deleteAddress.bind(null,number)}></span>
+            <span className="glyphicon glyphicon-remove icon icon-delete" id={number} onClick={this.open}></span>
           </td>
         </tr>
       )
@@ -91,8 +117,8 @@ class Home extends Component {
           <div className="container">
             <div className="row">
               <div className="col-lg-12">
-                <div className="alert alert-danger hide" role="alert">Address Successfully Deleted</div>
-                <div className="alert alert-success hide" role="alert">Address Successfully Added</div>
+                <div id="removeMsg" className="alert alert-danger hide" role="alert">Address Successfully Deleted</div>
+                <div id="addMsg" className="alert alert-success hide" role="alert">Address Successfully Added</div>
                 <div className="block">
                   <div className="block-header">
                     <div className="clearfix">
@@ -100,7 +126,7 @@ class Home extends Component {
                         <h2>List of Address</h2>
                       </div>
                       <div className="add-address pull-right">
-                        <a href="#/add-address"><span className="glyphicon glyphicon-plus"></span>&nbsp;Add New Address</a>
+                        <Link to={`/add-address`}><span className="glyphicon glyphicon-plus"></span>&nbsp;Add New Address</Link>
                       </div>
                     </div>
                   </div>
@@ -114,6 +140,18 @@ class Home extends Component {
                     <hr/>
                     <AddressList addressRows={addressRows} />
                   </div>
+                  <Modal show={this.state.showModal} onHide={this.close}>
+                    <Modal.Header closeButton>
+                      <Modal.Title>Confirmation Modal</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                      <p> Are you sure you want to delete address of {this.state.name}? </p>
+                    </Modal.Body>
+                    <Modal.Footer>
+                      <Button onClick={this.close}>Close</Button>
+                      <Button bsStyle="danger" onClick={this.deleteAddress}>Confirm</Button>
+                    </Modal.Footer>
+                  </Modal>
                 </div>
               </div>
             </div>

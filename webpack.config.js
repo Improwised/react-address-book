@@ -1,14 +1,25 @@
 var webpack = require('webpack');
-
 var entryPoint = ['./app/app.jsx'];
+const jsxLoaders = ['jsx?harmony'];
 
 module.exports = {
   entry: entryPoint,
   output: {
     // Output the bundled file.
-    path: './lib',
+    path: `${__dirname}/lib/`,
     // Use the name specified in the entry key as name for the bundle file.
-    filename: 'bundle.js'
+    filename: 'bundle.js',
+
+    // *********************
+    // for Remote publicPath
+    // *********************
+    publicPath: '/react-address-book/lib/',
+
+    // ********************
+    // for Local publicPath
+    // ********************
+    // publicPath: '/lib/',
+
   },
   resolve: {
     // Include empty string '' to resolve files by their explicit extension
@@ -19,6 +30,28 @@ module.exports = {
   },
   module: {
     loaders: [
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader',
+        exclude: /node_modules/,
+      },
+      {
+        test: /\.png$/,
+        loader: 'url?limit=10000&minetype=image/png',
+      }, {
+        test: /\.woff(2)?(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&minetype=application/font-woff',
+      }, {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&minetype=application/octet-stream',
+      }, {
+        test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'file',
+      },
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: 'url?limit=10000&minetype=image/svg+xml',
+      },
       {
         test: /\.jsx?$/,
         exclude: /node_modules/,
