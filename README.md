@@ -14,7 +14,7 @@ Install all dependencies througn npm.
 $ npm install
 ```
 
-Install global dependencies througn npm and bower.
+Install global dependencies througn npm.
 
 ```
 $ npm install -g webpack
