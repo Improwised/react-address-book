@@ -2,6 +2,8 @@ import React, { PropTypes, Component } from 'react';
 import { Router, browserHistory, history } from 'react-router';
 import reactCookie from 'react-cookie';
 import { Link } from 'react-router';
+import $ from 'jquery';
+import Countries from '../../assets/js/countries.json';
 import Name from './formComponent/name';
 import Phoneno from './formComponent/phoneno';
 import Street from './formComponent/street';
@@ -39,11 +41,11 @@ class Addaddress extends Component {
       this.setState({
         firstname: editData.name.firstname,
         lastname:editData.name.lastname ,
-        phoneno: editData.phoneno,
+        phoneno: (editData.phoneno).toString(),
         street: editData.address.street,
         state: editData.address.state,
         city: editData.address.city,
-        zipcode: editData.address.zipcode,
+        zipcode: (editData.address.zipcode).toString(),
         country: editData.address.country,
         title: 'Edit Address'
       });
@@ -68,12 +70,12 @@ class Addaddress extends Component {
     // Prepare Form Data
     var new_address = {
       "name": {'firstname':this.state.firstname,'lastname':this.state.lastname },
-      "phoneno": this.state.phoneno,
+      "phoneno": (this.state.phoneno).toString(),
       "address":{
         'street'  : this.state.street,
         'state'   : this.state.state ,
         'city'    : this.state.city,
-        'zipcode' : this.state.zipcode,
+        'zipcode' : (this.state.zipcode).toString(),
         'country' : this.state.country
       }
     };
@@ -84,8 +86,8 @@ class Addaddress extends Component {
       new_address.id = number;
       data[number] = new_address;
     } else {
-      var id = data.length-1;
-      new_address.id = data[id].id + 1;
+      var id = (data.length > 0) ? data.length - 1 : 0;
+      new_address.id = data[id] ? data[id].id + 1 : 0;
       data.push(new_address);
     }
 
@@ -125,7 +127,7 @@ class Addaddress extends Component {
 
   render () {
     // Create Country Option
-    var countryOption = countries.map(function(country, i){
+    var countryOption = Countries.map(function(country, i){
       return (
         <option key={i} value={country.name}>{country.name}</option>
       )

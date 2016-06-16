@@ -12,8 +12,10 @@ class App extends Component {
   componentWillMount () {
     if (this.props.location.pathname === '/') {
       this.setState({ activeLink: 'addressList' });
-    } else {
+    } else if (this.props.location.pathname === '/add-address'){
       this.setState({ activeLink: 'addAddress' });
+    } else {
+      this.setState({ activeLink: '' });
     }
   }
 
@@ -21,8 +23,10 @@ class App extends Component {
   componentWillReceiveProps (nextProps, nextState) {
     if (nextProps.location.pathname === '/') {
       this.setState({ activeLink: 'addressList' });
-    } else {
+    } else if (nextProps.location.pathname === '/add-address'){
       this.setState({ activeLink: 'addAddress' });
+    } else {
+      this.setState({ activeLink: '' });
     }
   }
 

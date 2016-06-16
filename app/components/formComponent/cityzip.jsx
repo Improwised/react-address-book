@@ -16,7 +16,7 @@ function CityZip(props) {
       </div>
       <div className="hidden-lg"><br/></div>
       <div className="col-lg-4">
-        <input type="text" className="form-control" id="zipcode" placeholder="Enter Zipcode" name="zipcode" maxLength="6" minlength="6" value={props.zipcode} onChange={props.handleChange} required/>
+        <input type="number" className="form-control" id="zipcode" placeholder="Enter Zipcode" name="zipcode" maxLength="6" minlength="6" value={props.zipcode} onChange={props.handleChange} required/>
       </div>
     </div>
   );

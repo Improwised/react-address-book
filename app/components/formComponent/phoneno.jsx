@@ -12,7 +12,7 @@ function Phoneno(props) {
         <label>Phone Number:</label>
       </div>
       <div className="col-lg-8">
-        <input type="text" className="form-control" id="phoneno" placeholder="10 Digit Phone Number" name="no" maxLength="10" minLength="10" value={props.phoneno} onChange={props.handleChange} required/>
+        <input type="number" className="form-control" id="phoneno" placeholder="10 Digit Phone Number" name="no" maxLength="10" minLength="10" value={props.phoneno} onChange={props.handleChange} required/>
       </div>
     </div>
   );

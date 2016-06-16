@@ -23,39 +23,3 @@ function updateTime(){
   document.getElementById('time_span').innerHTML = t_str;
 }
 setInterval(updateTime);
-// ========================================================================
-// // timing function
-// ========================================================================
-
-
-// ========================================================================
-// active link function
-// ========================================================================
-function activelink() {
-  var url = window.location.href.replace('http://localhost:8080/#/','');
-
-  if(url == 'add-address'){
-    $("#Add-Address").addClass('active');
-    $("#Address-List").removeClass('active');
-  }
-  else{
-    $("#Add-Address").removeClass('active');
-    $("#Address-List").addClass('active');
-  }
-}
-activelink();
-// ========================================================================
-// // active link function
-// ========================================================================
-
-
-
-// ========================================================================
-// watch timeing function
-// ========================================================================
-$(window).on('hashchange', function() {
-  activelink();
-});
-// ========================================================================
-// // watch timeing function
-// ========================================================================
